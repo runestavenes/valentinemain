@@ -1,22 +1,24 @@
-// components/Question.js
 import { useState } from "react";
 
-const Question = ({
-  imageSrc,
-  questionText,
-  onYes,
-  onNo,
-  inputRequired,
-  onSubmit,
-}) => {
-  const [inputValue, setInputValue] = useState("");
+const Question = ({ imageSrc, questionText, onYes }) => {
+  const [noButtonPosition, setNoButtonPosition] = useState({ x: 0, y: 0 });
+
+  const handleNoMouseEnter = () => {
+    // Generate random position within viewport bounds
+    const maxX = window.innerWidth - 200; // button width margin
+    const maxY = window.innerHeight - 100; // button height margin
+    
+    const randomX = Math.random() * maxX - maxX / 2;
+    const randomY = Math.random() * maxY - maxY / 2;
+    
+    setNoButtonPosition({ x: randomX, y: randomY });
+  };
 
   return (
     <div className="flex flex-col items-center">
-      {" "}
-      <img src={imageSrc} alt="Question" width={200} />
+      <img src={imageSrc} alt="Hjerte" width={200} />
       <span
-        className="font-bold mb-6 text-2xl text-center"
+        className="font-bold mb-6 text-2xl text-center px-4"
         style={{
           textShadow: "2px 2px white",
           textWrap: "balance",
@@ -24,45 +26,28 @@ const Question = ({
       >
         {questionText}
       </span>
-      {inputRequired ? (
-        <div>
-          <input
-            type="text"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            placeholder="Twoja odp:"
-            className="text-lg bg-pink-100 border-2 border-blue-300 rounded-full py-2 px-4 shadow-md focus:outline-none focus:border-purple-500 focus:bg-white transition duration-300"
-            style={{ fontFamily: "'Comic Neue', cursive" }}
-          />
-          <button
-            onClick={() => {
-              onSubmit(inputValue);
-              setInputValue("");
-            }}
-            className="ml-4 px-4 py-2 bg-green-400 text-white font-bold rounded-full hover:bg-green-600 transition duration-300"
-            style={{ fontFamily: "'Comic Neue', cursive" }}
-          >
-            Submit
-          </button>{" "}
-        </div>
-      ) : (
-        <div className="flex justify-center">
-          <button
-            onClick={onYes}
-            className="ml-4 px-4 py-2 bg-green-400 text-white font-bold rounded-full hover:bg-green-600 transition duration-300"
-            style={{ fontFamily: "'Comic Neue', cursive" }}
-          >
-            OCZYWISCIE
-          </button>
-          <button
-            onClick={onNo}
-            className="ml-4 px-4 py-2 bg-red-400 text-white font-bold rounded-full hover:bg-green-600 transition duration-300"
-            style={{ fontFamily: "'Comic Neue', cursive" }}
-          >
-            NJE
-          </button>
-        </div>
-      )}
+
+      <div className="flex justify-center gap-4 relative">
+        <button
+          onClick={onYes}
+          className="px-6 py-3 bg-green-400 text-white font-bold rounded-full hover:bg-green-600 transition duration-300"
+          style={{ fontFamily: "'Comic Neue', cursive" }}
+        >
+          JA! 💕
+        </button>
+        
+        <button
+          onMouseEnter={handleNoMouseEnter}
+          className="px-6 py-3 bg-red-400 text-white font-bold rounded-full hover:bg-red-600 transition-all duration-200"
+          style={{
+            fontFamily: "'Comic Neue', cursive",
+            transform: `translate(${noButtonPosition.x}px, ${noButtonPosition.y}px)`,
+            position: noButtonPosition.x !== 0 ? 'fixed' : 'relative',
+          }}
+        >
+          Nei
+        </button>
+      </div>
     </div>
   );
 };
