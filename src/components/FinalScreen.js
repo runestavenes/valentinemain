@@ -1,31 +1,9 @@
-import React, { useEffect } from "react";
-import cipicipiAudio from "../assets/cipicipi.mp3"; // Adjust the path as necessary
+import React from "react";
 
-const FinalScreen = ({ imageSrc, finalText }) => {
-  useEffect(() => {
-    const audio = new Audio(cipicipiAudio);
-    let playPromise = audio.play();
-
-    if (playPromise !== undefined) {
-      playPromise.then((_) => {}).catch((error) => {});
-    }
-
-    return () => {
-      if (playPromise !== undefined) {
-        playPromise
-          .then((_) => {
-            audio.pause();
-          })
-          .catch((error) => {
-            console.error("Error pausing the audio", error);
-          });
-      }
-    };
-  }, []);
-
+const FinalScreen = () => {
   return (
-    <div className="flex flex-col items-center">
-      <img src={"/final.gif"} alt="Final" width={200} />
+    <div className="flex flex-col items-center px-4">
+      <img src="/final.gif" alt="Ferdig" width={200} />
       <span
         className="font-bold mb-6 text-2xl text-center"
         style={{
@@ -33,9 +11,16 @@ const FinalScreen = ({ imageSrc, finalText }) => {
           textWrap: "balance",
         }}
       >
-        OTO OFICJALNE ZAPROSZENIE NA RANDKE W WALENTYNKI. WIENCEJ SZCZEGULOW -
-        WNET
+        Best det... Jeg gleder meg til vår Valentine-date! 💖
       </span>
+      <p
+        className="text-lg text-center"
+        style={{
+          textShadow: "1px 1px white",
+        }}
+      >
+        Flere detaljer kommer snart... 😊
+      </p>
     </div>
   );
 };
